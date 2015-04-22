@@ -1,0 +1,18 @@
+This directory contains the files for the seminar paper of Philipp Keck in the seminar "Software Evolution", titled "Classification and Injection of Typical Performance Problems in Enterprise Applications".
+
+The contents are based on the files corresponding to the example
+presented in Chapter B (Java EE Servlet Container Example) of 
+the Kieker user guide.
+See the user guide (doc/kieker-userguide.pdf) for details.
+
+The following changes have been made to the Kieker example:
+- The CatalogActionBean#viewProduct() method now contains a Thread.sleep(1000);
+- The namespace de.uni_stuttgart.iste.ppi has been added and contains the code for the Performance Problem Injection. Note that this code would typically reside in a separate library and is only included in the same project to simplify the build process.
+- The src/main/resources/META-INF/aop.xml instantiates TheRampAspect as an example.
+
+The code is in the "jpetstore-6-mybatis-jpetstore-6.0.1" folder.
+The folder "jetty-hightide-jpetstore" contains the server.
+Build and deploy the example with "ant build-all" on the command line.
+Start the server with " java -jar start.jar" in the "jetty-hightide-jpetstore" folder.
+
+A "TestPlan.jmx" is provided to be used with JMeter. When run against the server, it will store its results in the JMeter bin directory in a file called "results-default.jtl". The graphs shown in the paper have been created by filtering for rows with "label" == "View Product" and visualizing the "elapsed" values (duration of the respective request) over the "allThreads" value (number of concurrently active threads).

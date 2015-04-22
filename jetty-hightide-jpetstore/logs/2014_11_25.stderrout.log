@@ -1,0 +1,94 @@
+2014-11-25 14:01:38.925:INFO:oejs.Server:jetty-7.6.10.v20130312
+2014-11-25 14:01:38.944:INFO:oejdp.ScanningAppProvider:Deployment monitor /home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps at interval 1
+2014-11-25 14:01:38.949:INFO:oejd.DeploymentManager:Deployable added: /home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps/jpetstore
+ INFO 2014-11-25 14:01:39,858 kieker.common.logging.LogImplCommonsLogging: Loading configuration from JVM-specified location: 'kieker.monitoring.properties'
+ERROR 2014-11-25 14:01:39,878 kieker.common.logging.LogImplCommonsLogging: IMonitoringWriter: Failed to load class for name 'kieker.monitoring.writer.filesystem.AsyncBinaryFsWriter'
+java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at kieker.monitoring.core.controller.AbstractController.createAndInitialize(AbstractController.java:125)
+	at kieker.monitoring.core.controller.WriterController.<init>(WriterController.java:56)
+	at kieker.monitoring.core.controller.MonitoringController.<init>(MonitoringController.java:56)
+	at kieker.monitoring.core.controller.MonitoringController.createInstance(MonitoringController.java:72)
+	at kieker.monitoring.core.controller.MonitoringController$LazyHolder.<clinit>(MonitoringController.java:312)
+	at kieker.monitoring.core.controller.MonitoringController.getInstance(MonitoringController.java:305)
+	at kieker.monitoring.probe.servlet.CPUMemUsageServletContextListener.<init>(CPUMemUsageServletContextListener.java:98)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at java.lang.Class.newInstance(Class.java:379)
+	at org.eclipse.jetty.servlet.ServletContextHandler$Context.createListener(ServletContextHandler.java:725)
+	at org.eclipse.jetty.webapp.StandardDescriptorProcessor.newListenerInstance(StandardDescriptorProcessor.java:1408)
+	at org.eclipse.jetty.webapp.StandardDescriptorProcessor.visitListener(StandardDescriptorProcessor.java:1365)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.jetty.webapp.IterativeDescriptorProcessor.visit(IterativeDescriptorProcessor.java:85)
+	at org.eclipse.jetty.webapp.IterativeDescriptorProcessor.process(IterativeDescriptorProcessor.java:72)
+	at org.eclipse.jetty.webapp.MetaData.resolve(MetaData.java:326)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1238)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:689)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:482)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.deploy.bindings.StandardStarter.processBinding(StandardStarter.java:39)
+	at org.eclipse.jetty.deploy.AppLifeCycle.runBindings(AppLifeCycle.java:186)
+	at org.eclipse.jetty.deploy.DeploymentManager.requestAppGoal(DeploymentManager.java:494)
+	at org.eclipse.jetty.deploy.DeploymentManager.addApp(DeploymentManager.java:141)
+	at org.eclipse.jetty.deploy.providers.ScanningAppProvider.fileAdded(ScanningAppProvider.java:145)
+	at org.eclipse.jetty.deploy.providers.ScanningAppProvider$1.fileAdded(ScanningAppProvider.java:56)
+	at org.eclipse.jetty.util.Scanner.reportAddition(Scanner.java:609)
+	at org.eclipse.jetty.util.Scanner.reportDifferences(Scanner.java:540)
+	at org.eclipse.jetty.util.Scanner.scan(Scanner.java:403)
+	at org.eclipse.jetty.util.Scanner.doStart(Scanner.java:337)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.deploy.providers.ScanningAppProvider.doStart(ScanningAppProvider.java:121)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.deploy.DeploymentManager.startAppProvider(DeploymentManager.java:555)
+	at org.eclipse.jetty.deploy.DeploymentManager.doStart(DeploymentManager.java:230)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.util.component.AggregateLifeCycle.doStart(AggregateLifeCycle.java:81)
+	at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:58)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.doStart(HandlerWrapper.java:96)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:279)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.xml.XmlConfiguration$1.run(XmlConfiguration.java:1259)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.jetty.xml.XmlConfiguration.main(XmlConfiguration.java:1182)
+Caused by: java.lang.IllegalArgumentException: '/tmp/Hora-Experiment' is not a directory.
+	at kieker.monitoring.writer.filesystem.AbstractAsyncFSWriter.<init>(AbstractAsyncFSWriter.java:77)
+	at kieker.monitoring.writer.filesystem.AsyncBinaryFsWriter.<init>(AsyncBinaryFsWriter.java:55)
+	... 54 more
+ INFO 2014-11-25 14:01:39,886 kieker.common.logging.LogImplCommonsLogging: Shutting down Monitoring Controller (KIEKER)
+2014-11-25 14:01:40.136:INFO:jpetstore:Initializing Spring root WebApplicationContext
+ INFO 2014-11-25 14:01:40,136 org.springframework.web.context.ContextLoader: Root WebApplicationContext: initialization started
+ INFO 2014-11-25 14:01:40,170 org.springframework.context.support.AbstractApplicationContext: Refreshing Root WebApplicationContext: startup date [Tue Nov 25 14:01:40 CET 2014]; root of context hierarchy
+ INFO 2014-11-25 14:01:40,209 org.springframework.beans.factory.xml.XmlBeanDefinitionReader: Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+ INFO 2014-11-25 14:01:40,487 org.springframework.beans.factory.support.DefaultListableBeanFactory: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@190c9784: defining beans [dataSource,opEMII,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,transactionManager,orderService,accountService,catalogService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,sequenceMapper,accountMapper,lineItemMapper,orderMapper,categoryMapper,itemMapper,productMapper]; root of factory hierarchy
+ INFO 2014-11-25 14:01:40,657 org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Creating embedded database 'dataSource'
+ INFO 2014-11-25 14:01:40,722 org.springframework.jdbc.datasource.init.ResourceDatabasePopulator: Executing SQL script from class path resource [database/jpetstore-hsqldb-schema.sql]
+ INFO 2014-11-25 14:01:40,734 org.springframework.jdbc.datasource.init.ResourceDatabasePopulator: Done executing SQL script from class path resource [database/jpetstore-hsqldb-schema.sql] in 12 ms.
+ INFO 2014-11-25 14:01:40,735 org.springframework.jdbc.datasource.init.ResourceDatabasePopulator: Executing SQL script from class path resource [database/jpetstore-hsqldb-dataload.sql]
+ INFO 2014-11-25 14:01:40,752 org.springframework.jdbc.datasource.init.ResourceDatabasePopulator: Done executing SQL script from class path resource [database/jpetstore-hsqldb-dataload.sql] in 17 ms.
+ INFO 2014-11-25 14:01:40,760 kieker.common.logging.LogImplCommonsLogging: First threadId will be 8762034550026010624
+ INFO 2014-11-25 14:01:41,276 org.springframework.web.context.ContextLoader: Root WebApplicationContext: initialization completed in 1140 ms
+ERROR 2014-11-25 14:01:41,286 kieker.common.logging.LogImplCommonsLogging: No Sigar native lib in java.library.path. See Sigar log for details (maybe only visible on Debug log-level).
+ERROR 2014-11-25 14:01:41,306 kieker.common.logging.LogImplCommonsLogging: Exception caught by RejectedExecutionHandler for Runnable java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@7cc8d976 and ThreadPoolExecutor java.util.concurrent.ScheduledThreadPoolExecutor@663d11fa[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]
+ERROR 2014-11-25 14:01:41,307 kieker.common.logging.LogImplCommonsLogging: Exception caught by RejectedExecutionHandler for Runnable java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@59ab51b0 and ThreadPoolExecutor java.util.concurrent.ScheduledThreadPoolExecutor@663d11fa[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]
+2014-11-25 14:01:41.307:INFO:oejsh.ContextHandler:started o.e.j.w.WebAppContext{/jpetstore,file:/home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps/jpetstore/},/home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps/jpetstore
+ INFO 2014-11-25 14:01:41,326 net.sourceforge.stripes.util.Log: Using VFS adapter net.sourceforge.stripes.vfs.DefaultVFS
+ INFO 2014-11-25 14:01:41,394 net.sourceforge.stripes.util.Log: No locale list specified, defaulting to single locale: en_US
+ WARN 2014-11-25 14:01:41,400 net.sourceforge.stripes.util.Log: No MultipartWrapper implementation could be loaded
+ INFO 2014-11-25 14:01:41,404 net.sourceforge.stripes.util.Log: Stripes Initialization Complete. Version: 1.5.6, Build: 1.5.6
+2014-11-25 14:01:41.435:INFO:oejd.DeploymentManager:Deployable added: /home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps/root
+2014-11-25 14:01:41.553:INFO:oejsh.ContextHandler:started o.e.j.w.WebAppContext{/,file:/home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps/root/},/home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/webapps/root
+2014-11-25 14:01:41.555:INFO:oejdp.ScanningAppProvider:Deployment monitor /home/tp/PhD/RSS/Papers/Ideas/EDCC++/hora-jpetstore/Experiments/JavaEEServletContainerExample/jetty-hightide-jpetstore/contexts at interval 1
+2014-11-25 14:01:41.574:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:8080
+ INFO 2014-11-25 14:01:44,762 net.sourceforge.stripes.util.Log: Expression validation will be performed using: net.sourceforge.stripes.validation.expression.Jsp21ExpressionExecutor
+ERROR 2014-11-25 14:01:44,785 net.sourceforge.stripes.util.Log: Something has gone awry! I have a bridge to nowhere: public void org.mybatis.jpetstore.web.actions.CatalogActionBean.setContext(net.sourceforge.stripes.action.ActionBeanContext)
+ERROR 2014-11-25 14:01:46,074 net.sourceforge.stripes.util.Log: Something has gone awry! I have a bridge to nowhere: public void org.mybatis.jpetstore.web.actions.CartActionBean.setContext(net.sourceforge.stripes.action.ActionBeanContext)
+ERROR 2014-11-25 14:01:46,083 net.sourceforge.stripes.util.Log: Something has gone awry! I have a bridge to nowhere: public void org.mybatis.jpetstore.web.actions.AccountActionBean.setContext(net.sourceforge.stripes.action.ActionBeanContext)
+Parameter: complexity:CatalogService.getProductListByCategory:1000

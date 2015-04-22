@@ -1,0 +1,8 @@
+Java HotSpot(TM) 64-Bit Server VM (25.25-b02) for windows-amd64 JRE (1.8.0_25-b18), built on Oct  7 2014 14:25:37 by "java_re" with MS VC++ 10.0 (VS2010)
+Memory: 4k page, physical 6282416k(1395320k free), swap 12562968k(3971500k free)
+CommandLine flags: -XX:InitialHeapSize=1572864000 -XX:MaxHeapSize=1572864000 -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:-UseLargePagesIndividualAllocation -XX:+UseParallelGC 
+2014-12-18T23:34:12.014+0100: 2.560: [GC (Metadata GC Threshold) [PSYoungGen: 184322K->16222K(448000K)] 184322K->16326K(1472000K), 0.0133470 secs] [Times: user=0.09 sys=0.00, real=0.01 secs] 
+2014-12-18T23:34:12.027+0100: 2.574: [Full GC (Metadata GC Threshold) [PSYoungGen: 16222K->0K(448000K)] [ParOldGen: 104K->15324K(1024000K)] 16326K->15324K(1472000K), [Metaspace: 20777K->20777K(1069056K)], 0.0391507 secs] [Times: user=0.13 sys=0.00, real=0.04 secs] 
+2014-12-18T23:34:15.571+0100: 6.118: [GC (Metadata GC Threshold) [PSYoungGen: 241956K->17590K(448000K)] 257281K->32923K(1472000K), 0.0177310 secs] [Times: user=0.09 sys=0.02, real=0.02 secs] 
+2014-12-18T23:34:15.589+0100: 6.136: [Full GC (Metadata GC Threshold) [PSYoungGen: 17590K->0K(448000K)] [ParOldGen: 15332K->22517K(1024000K)] 32923K->22517K(1472000K), [Metaspace: 34915K->34914K(1081344K)], 0.0533227 secs] [Times: user=0.25 sys=0.00, real=0.05 secs] 
+2014-12-18T23:34:56.824+0100: 47.369: [GC (Allocation Failure) [PSYoungGen: 384000K->11525K(448000K)] 406517K->34051K(1472000K), 0.0305522 secs] [Times: user=0.06 sys=0.00, real=0.03 secs] 

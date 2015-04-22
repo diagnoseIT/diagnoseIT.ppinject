@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="KiekerLiveDemoExample" default="build-all" basedir=".">
+	<property name="jpetstore.basedir" value="jpetstore-6-mybatis-jpetstore-6.0.1"/>
+	<property name="jpetstore.war" value="${jpetstore.basedir}/target/jpetstore.war"/>
+
+	<property name="jetty.basedir" value="jetty-hightide-jpetstore"/>
+ 	<property name="jetty.webapps" value="${jetty.basedir}/webapps/"/>
+ 	<property name="jetty.webapps.jpetstore" value="${jetty.webapps}/jpetstore/"/>
+	
+	<target name="build-all" depends="clean,init,war-jpetstore,unwar-jpetstore" />
+	
+	<target name="init">
+	</target>
+	
+	<target name="war-jpetstore">
+	  <exec dir="${jpetstore.basedir}" executable="mvn.bat">
+	    <arg line="clean package" />
+	  </exec>
+	</target>
+
+        <target name="unwar-jpetstore" depends="war-jpetstore">
+                  <!--<copy file="${jpetstore.war}" todir="${jetty.webapps}"/>-->
+		  <mkdir dir="${jetty.webapps.jpetstore}"/>    
+		  <unwar src="${jpetstore.war}"
+			 dest="${jetty.webapps.jpetstore}"/>
+		  <copy  todir="${jetty.webapps.jpetstore}/WEB-INF/lib/">
+		    <fileset dir="sigar/"/> 
+		  </copy>         
+	</target>
+	
+	<target name="clean">
+	  <delete dir="${jetty.webapps.jpetstore}" includeemptydirs="true" />
+	</target>	
+</project>
