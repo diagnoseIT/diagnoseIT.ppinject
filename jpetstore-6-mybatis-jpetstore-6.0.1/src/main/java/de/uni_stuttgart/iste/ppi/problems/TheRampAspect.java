@@ -51,6 +51,7 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
 
         // Sleep for the Ramp
         long sleepTime = (long) (duration * executionNumber * configuration.alpha);
+        //System.out.println("Sleeping " + sleepTime + " nanos");
         try {
             Thread.sleep(sleepTime / 1000000, (int) (sleepTime % 1000000));
         } catch (Throwable t) {
