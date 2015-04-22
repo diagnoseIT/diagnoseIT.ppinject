@@ -13,7 +13,7 @@
 	</target>
 	
 	<target name="war-jpetstore">
-	  <exec dir="${jpetstore.basedir}" executable="mvn.bat">
+	  <exec dir="${jpetstore.basedir}" executable="mvn"> <!-- mvn.bat -->
 	    <arg line="clean package" />
 	  </exec>
 	</target>
