@@ -1,7 +1,7 @@
 package de.uni_stuttgart.iste.ppi;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -17,13 +17,13 @@ import de.uni_stuttgart.iste.ppi.Container.BasePerformanceProblem;
  */
 public final class ExecutionStateStore<S extends ExecutionState> {
 
-    private S globalState;
-    private Map<Class<?>, S> perClassState = new ConcurrentHashMap<Class<?>, S>();
-    private Map<Object, S> perInstanceState = new ConcurrentHashMap<Object, S>();
-    private Map<String, S> perMethodState = new ConcurrentHashMap<String, S>();
-    private Map<Object, Map<String, S>> localState = new ConcurrentHashMap<Object, Map<String, S>>();
+    private volatile S globalState;
+    private ConcurrentMap<Class<?>, S> perClassState = new ConcurrentHashMap<Class<?>, S>();
+    private ConcurrentMap<Object, S> perInstanceState = new ConcurrentHashMap<Object, S>();
+    private ConcurrentMap<String, S> perMethodState = new ConcurrentHashMap<String, S>();
+    private ConcurrentMap<Object, ConcurrentMap<String, S>> localState = new ConcurrentHashMap<Object, ConcurrentMap<String, S>>();
     private ThreadLocal<S> threadState = new ThreadLocal<S>();
-    private Map<ProblemConfiguration, S> perConfigurationState = new ConcurrentHashMap<ProblemConfiguration, S>();
+    private ConcurrentMap<ProblemConfiguration, S> perConfigurationState = new ConcurrentHashMap<ProblemConfiguration, S>();
 
     /**
      * Retrieves the state for a specific scope. The scope is specified in <tt>configuration.</tt>
@@ -88,7 +88,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             }
             Object instance4 = joinPoint.getTarget();
 
-            Map<String, S> instanceMethods4 = localState.get(instance4);
+            ConcurrentMap<String, S> instanceMethods4 = localState.get(instance4);
             if (instanceMethods4 == null) {
                 localState.putIfAbsent(instance4, new ConcurrentHashMap<String, S>());
                 instanceMethods4 = localState.get(instance4);

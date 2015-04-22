@@ -1,7 +1,7 @@
 package de.uni_stuttgart.iste.ppi;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -39,7 +39,7 @@ public class Container {
          * Used to store the execution states. Aspect classes may be instantiated multiple times, so that a static store
          * needs to be used.
          */
-        private static final Map<Class<? extends BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>> STATE_STORE_BY_TYPE = new ConcurrentHashMap<Class<? extends BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>>();
+        private static final ConcurrentMap<Class<? extends BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>> STATE_STORE_BY_TYPE = new ConcurrentHashMap<Class<? extends BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>>();
 
         /**
          * Accessor method for the state store cache.
