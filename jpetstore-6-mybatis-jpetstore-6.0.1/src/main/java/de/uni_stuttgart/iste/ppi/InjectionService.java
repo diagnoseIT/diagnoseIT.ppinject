@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import kieker.monitoring.core.signaturePattern.InvalidPatternException;
 import de.uni_stuttgart.iste.ppi.Container.BasePerformanceProblem;
+import de.uni_stuttgart.iste.ppi.problems.OneLaneBridgeAspect;
 import de.uni_stuttgart.iste.ppi.problems.TheRampAspect;
 
 /**
@@ -75,6 +76,7 @@ public class InjectionService {
         // TODO This would normally be read from a file or a JMX interface
         System.out.println("Initializing Test data");
         configure("*", TheRampAspect.class, new TheRampAspect.Config(Scope.Global, 0.01));
+        configure("*", OneLaneBridgeAspect.class, new OneLaneBridgeAspect.Config(Scope.Global, 2));
     }
 
     /**

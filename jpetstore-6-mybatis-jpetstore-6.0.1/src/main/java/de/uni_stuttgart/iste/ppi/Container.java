@@ -99,6 +99,7 @@ public class Container {
                 System.out.println("Deactivated for " + joinPoint.getSignature());
                 return joinPoint.proceed();
             }
+            System.out.println("We're in " + joinPoint.getSignature());
 
             S state = stateStore.getState(joinPoint, joinPointConfig, this);
             return execute(joinPoint, joinPointConfig, state);

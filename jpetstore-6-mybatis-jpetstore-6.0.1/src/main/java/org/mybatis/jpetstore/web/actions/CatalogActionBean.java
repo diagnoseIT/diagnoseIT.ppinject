@@ -163,6 +163,10 @@ public class CatalogActionBean extends AbstractActionBean {
 		this.complexityService.compute2("CatalogActionBean.viewItem");
 		item = catalogService.getItem(itemId);
 		product = item.getProduct();
+		try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
 		return new ForwardResolution(VIEW_ITEM);
 	}
 

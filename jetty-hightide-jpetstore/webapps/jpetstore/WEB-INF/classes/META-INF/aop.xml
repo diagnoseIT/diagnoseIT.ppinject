@@ -2,7 +2,7 @@
 <aspectj>
 	<weaver options="">
 		<!-- Example instrumentation for the myBatis JPetStore -->
-		<include within="org.mybatis.jpetstore.service.aspect..*" />
+		<include within="de.uni_stuttgart.iste.ppi.problems.*" />
 		<include within="org.mybatis.jpetstore.web..*" />
 		<!--<include within="org.mybatis.jpetstore.persistence..*"/> -->
 		<!--<include within="org.mybatis.jpetstore.service..*"/> -->
@@ -26,9 +26,13 @@
 			int update(..))" /> </concrete-aspect> -->
 		<!-- <aspect name="org.mybatis.jpetstore.service.aspect.TheRampAspect"/> -->
 		<!-- <concrete-aspect name="org.mybatis.jpetstore.service.PrecedenceAspect" precedence="*..*OperationExecutionDelayAspect, *..*kieker..*, *"/> -->
-		<concrete-aspect name="org.mybatis.jpetstore.service.MyTheRampAspect" extends="de.uni_stuttgart.iste.ppi.problems.TheRampAspect">
+		<concrete-aspect name="de.uni_stuttgart.iste.ppi.problems.MyTheRampAspect" extends="de.uni_stuttgart.iste.ppi.problems.TheRampAspect">
 			<pointcut name="targetOperation" 
 				expression="execution(public * org.mybatis.jpetstore.web.actions.CatalogActionBean.viewProduct())" />
+		</concrete-aspect>
+		<concrete-aspect name="de.uni_stuttgart.iste.ppi.problems.MyOneLaneBridgeAspect" extends="de.uni_stuttgart.iste.ppi.problems.OneLaneBridgeAspect">
+			<pointcut name="targetOperation" 
+				expression="execution(public * org.mybatis.jpetstore.web.actions.CatalogActionBean.viewItem())" />
 		</concrete-aspect>
 	</aspects>
 </aspectj>

@@ -3,6 +3,8 @@ package de.uni_stuttgart.iste.ppi.problems;
 import java.util.concurrent.Semaphore;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.DeclarePrecedence;
 
 import de.uni_stuttgart.iste.ppi.Container;
 import de.uni_stuttgart.iste.ppi.ExecutionState;
@@ -15,6 +17,8 @@ import de.uni_stuttgart.iste.ppi.Scope;
  * 
  * @author Philipp Keck (University of Stuttgart)
  */
+@Aspect
+@DeclarePrecedence("kieker..*,OneLaneBridgeAspect")
 public abstract class OneLaneBridgeAspect extends Container.BasePerformanceProblem<OneLaneBridgeAspect.Config, OneLaneBridgeAspect.State> {
 
     /**
@@ -22,6 +26,7 @@ public abstract class OneLaneBridgeAspect extends Container.BasePerformanceProbl
      */
     @Override
     protected Object execute(ProceedingJoinPoint joinPoint, Config configuration, State state) throws Throwable {
+    	System.out.println("One lane bridge, available permits: " + state.semaphore.availablePermits());
         state.semaphore.acquire();
         try {
             return joinPoint.proceed();
