@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="KiekerLiveDemoExample" default="build-all" basedir=".">
-	<property name="jpetstore.basedir" value="jpetstore-6-mybatis-jpetstore-6.0.1"/>
+	<property name="jpetstore.basedir" value="jpetstore-6-mybatis-jpetstore-6.0.1-mod"/>
 	<property name="jpetstore.war" value="${jpetstore.basedir}/target/jpetstore.war"/>
 
-	<property name="jetty.basedir" value="jetty-hightide-jpetstore"/>
+	<property name="jetty.basedir" value="jetty"/>
  	<property name="jetty.webapps" value="${jetty.basedir}/webapps/"/>
  	<property name="jetty.webapps.jpetstore" value="${jetty.webapps}/jpetstore/"/>
 	

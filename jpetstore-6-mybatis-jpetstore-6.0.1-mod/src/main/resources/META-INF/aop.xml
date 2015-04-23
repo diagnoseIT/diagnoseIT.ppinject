@@ -1,0 +1,38 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.aspectj.org/dtd/aspectj_1_5_0.dtd">
+<aspectj>
+	<weaver options="">
+		<!-- Example instrumentation for the myBatis JPetStore -->
+		<include within="de.uni_stuttgart.iste.ppi.problems.*" />
+		<include within="org.mybatis.jpetstore.web..*" />
+		<!--<include within="org.mybatis.jpetstore.persistence..*"/> -->
+		<!--<include within="org.mybatis.jpetstore.service..*"/> -->
+		<!--<include within="org.mybatis.jpetstore.web..*"/> -->
+		<!--<include within="net.sourceforge.stripes.controller.DispatcherServlet"/> -->
+		<include within="org.apache.ibatis.executor..*" />
+	</weaver>
+	<aspects>
+		<!-- Use the aspect directives to specify the aspect(s) to use (typically only one). -->
+		<aspect name="kieker.monitoring.probe.aspectj.operationExecution.OperationExecutionAspectAnnotation" />
+		<!--<aspect name="kieker.monitoring.probe.aspectj.operationExecution.OperationExecutionAspectAnnotationServlet"/> -->
+		<!--<aspect name="kieker.monitoring.probe.aspectj.operationExecution.OperationExecutionAspectFull"/> -->
+		<!--<aspect name="kieker.monitoring.probe.aspect.JoperationExecution.OperationExecutionAspectFullServlet"/> -->
+		<concrete-aspect name="kieker.monitoring.probe.aspectj.operationExecution.TargetedAspect" extends="kieker.monitoring.probe.aspectj.operationExecution.AbstractOperationExecutionAspect">
+			<pointcut name="monitoredOperation"
+				expression="execution(public void org.apache.ibatis.executor.CachingExecutor.commit(boolean))
+			  || execution(public * org.apache.ibatis.executor.CachingExecutor.query(..))
+			  || execution(public * org.apache.ibatis.executor.CachingExecutor.update(..))" />
+		</concrete-aspect>
+		<!--<concrete-aspect name="org.mybatis.jpetstore.service.OperationExecutionDelayAspect"> <pointcut name="monitoredOperation" expression="execution(public 
+			int update(..))" /> </concrete-aspect> -->
+		<!-- <aspect name="org.mybatis.jpetstore.service.aspect.TheRampAspect"/> -->
+		<!-- <concrete-aspect name="org.mybatis.jpetstore.service.PrecedenceAspect" precedence="*..*OperationExecutionDelayAspect, *..*kieker..*, *"/> -->
+		<concrete-aspect name="de.uni_stuttgart.iste.ppi.problems.MyTheRampAspect" extends="de.uni_stuttgart.iste.ppi.problems.TheRampAspect">
+			<pointcut name="targetOperation" 
+				expression="execution(public * org.mybatis.jpetstore.web.actions.CatalogActionBean.viewProduct())" />
+		</concrete-aspect>
+		<concrete-aspect name="de.uni_stuttgart.iste.ppi.problems.MyOneLaneBridgeAspect" extends="de.uni_stuttgart.iste.ppi.problems.OneLaneBridgeAspect">
+			<pointcut name="targetOperation" 
+				expression="execution(public * org.mybatis.jpetstore.web.actions.CatalogActionBean.viewItem())" />
+		</concrete-aspect>
+	</aspects>
+</aspectj>

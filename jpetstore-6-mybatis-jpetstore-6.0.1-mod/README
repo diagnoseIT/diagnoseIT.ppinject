@@ -1,0 +1,14 @@
+Includes the JPetStore sources downloaded from 
+https://github.com/mybatis/jpetstore-6/releases 
+including the following adjustments:
+
+1. Changes from JPetStore version included in the 
+   Kieker releases (following part copied in from 
+   Kieker's README file in 
+   `examples/JavaEEServletContainerExample/jetty/webapps/jpetstore/README`):
+
+  - Kieker's Servlet filters are included in the file `WEB-INF/web.xml`.
+    The original version of the file is `WEB-INF/web.original.xml`.
+  - Kieker's Spring interceptors are included as (comments) in the file `WEB-INF/applicationContext.xml`.
+    The original version of the file is `WEB-INF/applicationContext.original.xml`.
+
