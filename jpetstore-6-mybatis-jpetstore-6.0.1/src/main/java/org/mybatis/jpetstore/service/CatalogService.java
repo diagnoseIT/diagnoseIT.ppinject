@@ -11,76 +11,46 @@ import org.mybatis.jpetstore.persistence.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kieker.monitoring.annotation.OperationExecutionMonitoringProbe;
-
 @Service
 public class CatalogService {
 
-	private final ComplexityService complexityService = ComplexityService
-			.getInstance();
-	
-	@Autowired
-	private CategoryMapper categoryMapper;
-	@Autowired
-	private ItemMapper itemMapper;
-	@Autowired
-	private ProductMapper productMapper;
+  @Autowired
+  private CategoryMapper categoryMapper;
+  @Autowired
+  private ItemMapper itemMapper;
+  @Autowired
+  private ProductMapper productMapper;
 
-	@OperationExecutionMonitoringProbe
-	public List<Category> getCategoryList() {
-		this.complexityService.compute("CatalogService.getCategoryList");
-		this.complexityService.compute2("CatalogService.getCategoryList");
-		return categoryMapper.getCategoryList();
-	}
+  public List<Category> getCategoryList() {
+    return categoryMapper.getCategoryList();
+  }
 
-	@OperationExecutionMonitoringProbe
-	public Category getCategory(String categoryId) {
-		this.complexityService.compute("CatalogService.getCategory");
-		this.complexityService.compute2("CatalogService.getCategory");
-		return categoryMapper.getCategory(categoryId);
-	}
+  public Category getCategory(String categoryId) {
+    return categoryMapper.getCategory(categoryId);
+  }
 
-	@OperationExecutionMonitoringProbe
-	public Product getProduct(String productId) {
-		this.complexityService.compute("CatalogService.getProduct");
-		this.complexityService.compute2("CatalogService.getProduct");
-		this.complexityService.leak("CatalogService.getProduct");
-		return productMapper.getProduct(productId);
-	}
+  public Product getProduct(String productId) {
+    return productMapper.getProduct(productId);
+  }
 
-	@OperationExecutionMonitoringProbe
-	public List<Product> getProductListByCategory(String categoryId) {
-		this.complexityService.compute("CatalogService.getProductListByCategory");
-		this.complexityService.compute2("CatalogService.getProductListByCategory");
-		return productMapper.getProductListByCategory(categoryId);
-	}
+  public List<Product> getProductListByCategory(String categoryId) {
+    return productMapper.getProductListByCategory(categoryId);
+  }
 
-	// TODO enable using more than one keyword
-	public List<Product> searchProductList(String keyword) {
-		this.complexityService.compute("CatalogService.searchProductList");
-		this.complexityService.compute2("CatalogService.searchProductList");
-		return productMapper.searchProductList("%" + keyword.toLowerCase()
-				+ "%");
-	}
+  // TODO enable using more than one keyword
+  public List<Product> searchProductList(String keyword) {
+    return productMapper.searchProductList("%" + keyword.toLowerCase() + "%");
+  }
 
-	@OperationExecutionMonitoringProbe
-	public List<Item> getItemListByProduct(String productId) {
-		this.complexityService.compute("CatalogService.getItemListByProduct");
-		this.complexityService.compute2("CatalogService.getItemListByProduct");
-		return itemMapper.getItemListByProduct(productId);
-	}
+  public List<Item> getItemListByProduct(String productId) {
+    return itemMapper.getItemListByProduct(productId);
+  }
 
-	@OperationExecutionMonitoringProbe
-	public Item getItem(String itemId) {
-		this.complexityService.compute("CatalogService.getItem");
-		this.complexityService.compute2("CatalogService.getItem");
-		return itemMapper.getItem(itemId);
-	}
+  public Item getItem(String itemId) {
+    return itemMapper.getItem(itemId);
+  }
 
-	@OperationExecutionMonitoringProbe
-	public boolean isItemInStock(String itemId) {
-		this.complexityService.compute("CatalogService.isItemInStock");
-		this.complexityService.compute2("CatalogService.isItemInStock");
-		return itemMapper.getInventoryQuantity(itemId) > 0;
-	}
+  public boolean isItemInStock(String itemId) {
+    return itemMapper.getInventoryQuantity(itemId) > 0;
+  }
 }

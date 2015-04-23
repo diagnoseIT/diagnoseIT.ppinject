@@ -13,9 +13,6 @@ import org.mybatis.jpetstore.domain.Cart;
 import org.mybatis.jpetstore.domain.CartItem;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.service.CatalogService;
-import org.mybatis.jpetstore.service.ComplexityService;
-
-import kieker.monitoring.annotation.OperationExecutionMonitoringProbe;
 
 @SessionScope
 public class CartActionBean extends AbstractActionBean {
@@ -25,9 +22,6 @@ public class CartActionBean extends AbstractActionBean {
   private static final String VIEW_CART = "/WEB-INF/jsp/cart/Cart.jsp";
   private static final String CHECK_OUT = "/WEB-INF/jsp/cart/Checkout.jsp";
 
-  private final ComplexityService complexityService = ComplexityService
-			.getInstance();
-  
   @SpringBean
   private transient CatalogService catalogService;
 
@@ -46,9 +40,7 @@ public class CartActionBean extends AbstractActionBean {
     this.workingItemId = workingItemId;
   }
 
-  @OperationExecutionMonitoringProbe
   public Resolution addItemToCart() {
-	  this.complexityService.compute("CartActionBean.addItemToCart");
     if (cart.containsItemId(workingItemId)) {
       cart.incrementQuantityByItemId(workingItemId);
     } else {
@@ -63,9 +55,8 @@ public class CartActionBean extends AbstractActionBean {
     return new ForwardResolution(VIEW_CART);
   }
 
-  @OperationExecutionMonitoringProbe
   public Resolution removeItemFromCart() {
-	  this.complexityService.compute("CartActionBean.removeItemFromCart");
+
     Item item = cart.removeItemById(workingItemId);
 
     if (item == null) {
@@ -76,9 +67,7 @@ public class CartActionBean extends AbstractActionBean {
     }
   }
 
-  @OperationExecutionMonitoringProbe
   public Resolution updateCartQuantities() {
-	  this.complexityService.compute("CartActionBean.updateCartQuantities");
     HttpServletRequest request = context.getRequest();
 
     Iterator<CartItem> cartItems = getCart().getAllCartItems();

@@ -35,7 +35,7 @@
     </jdbc:embedded-database>
 
     <!-- Kieker's instrumentation probes based on the Spring AOP interception framework -->
-	<bean id="opEMII" 
+    <bean id="opEMII" 
           class="kieker.monitoring.probe.spring.executions.OperationExecutionMethodInvocationInterceptor" /> 
     <aop:config>
         <aop:advisor advice-ref="opEMII" 
