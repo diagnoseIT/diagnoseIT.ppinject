@@ -5,7 +5,7 @@ Performance Problems in Enterprise Applications".
 The contents are based on the files corresponding to the example
 presented in Appendix B (Java EE Servlet Container Example) of 
 the Kieker user guide.
-See the user guide (kieker-<versoin>_userguide.pdf) for details.
+See the user guide (kieker-<version>_userguide.pdf) for details.
 
 The following changes have been made to the Kieker example:
 - The namespace de.uni_stuttgart.iste.ppi has been added and contains the code for
