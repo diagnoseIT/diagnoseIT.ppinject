@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+archivesBaseName = 'ppinject'
+sourceCompatibility = 1.6
+version = ''
+
+dependencies {
+  compile fileTree(dir: 'lib', include: '**/*.jar')
+}
+
+task copyJar(type: Copy, dependsOn: jar) {
+    from 'build/libs/ppinject.jar'
+    into '../jetty/webapps/jpetstore/WEB-INF/lib/'
+}

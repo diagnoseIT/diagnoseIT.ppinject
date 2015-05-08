@@ -1,0 +1,6 @@
+/.gradle
+/*.log
+**/.gradle
+**/.log
+**/ppinject.jar
+**/build
