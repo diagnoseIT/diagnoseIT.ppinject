@@ -53,7 +53,7 @@ public class InjectionService {
 		System.out.println("### > INJECTION SERVICE instantiated. < ###");
 
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -118,6 +118,7 @@ public class InjectionService {
 	private void addTestData() throws InvalidPatternException {
 		// TODO This would normally be read from a file or a JMX interface
 		System.out.println("Initializing Test data");
+		
 		configure("*", TheRampAspect.class, new TheRampAspect.Config(
 				Scope.Global, 1000, 0.01));
 		configure("*", OneLaneBridgeAspect.class,
@@ -153,5 +154,4 @@ public class InjectionService {
 		}
 		return result;
 	}
-
 }

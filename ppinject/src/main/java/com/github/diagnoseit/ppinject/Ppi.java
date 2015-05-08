@@ -15,6 +15,7 @@ public class Ppi implements PpiMBean {
 		return "Ppi";
 	}
 	
+	@Override
 	public void addTheRampAspect(String signaturePattern, String scope, long offsetMillis, double alpha) {
 		TheRampAspect.Config config = new TheRampAspect.Config(Scope.valueOf(scope), offsetMillis, alpha);
 		try {
@@ -24,6 +25,7 @@ public class Ppi implements PpiMBean {
 		}
 	}
 	
+	@Override
 	public void addOneLaneBridgeAspect(String signaturePattern, String scope, int numLanes) {
 		OneLaneBridgeAspect.Config config = new OneLaneBridgeAspect.Config(Scope.valueOf(scope), numLanes);
 		try {
