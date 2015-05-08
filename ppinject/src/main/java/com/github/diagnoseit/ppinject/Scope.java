@@ -1,6 +1,6 @@
-package de.uni_stuttgart.iste.ppi;
+package com.github.diagnoseit.ppinject;
 
-import de.uni_stuttgart.iste.ppi.Container.BasePerformanceProblem;
+import com.github.diagnoseit.ppinject.Container.BasePerformanceProblem;
 
 /**
  * Execution scopes for performance problems.

@@ -4,3 +4,6 @@
 **/.log
 **/ppinject.jar
 **/build
+**/.project
+**/.classpath
+**/bin

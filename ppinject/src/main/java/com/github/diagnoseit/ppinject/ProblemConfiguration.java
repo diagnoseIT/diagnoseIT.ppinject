@@ -1,4 +1,4 @@
-package de.uni_stuttgart.iste.ppi;
+package com.github.diagnoseit.ppinject;
 
 /**
  * Holds the configuration of a specific performance problem instance. Usually, performance problem implementations will

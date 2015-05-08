@@ -1,9 +1,11 @@
-package de.uni_stuttgart.iste.ppi;
+package com.github.diagnoseit.ppinject;
 
 import java.util.regex.Pattern;
 
 import kieker.monitoring.core.signaturePattern.InvalidPatternException;
 import kieker.monitoring.core.signaturePattern.PatternParser;
+
+
 
 /**
  * Instances of this class are used to store the configuration for a performance problem by pointcut.

@@ -1,4 +1,4 @@
-package de.uni_stuttgart.iste.ppi;
+package com.github.diagnoseit.ppinject;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;

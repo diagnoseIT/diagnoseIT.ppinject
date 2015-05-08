@@ -1,11 +1,11 @@
-package de.uni_stuttgart.iste.ppi;
+package com.github.diagnoseit.ppinject;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
-import de.uni_stuttgart.iste.ppi.Container.BasePerformanceProblem;
+import com.github.diagnoseit.ppinject.Container.BasePerformanceProblem;
 
 /**
  * Instances of this class store the execution state of a performance problem per scope. NOTE: This implementation is

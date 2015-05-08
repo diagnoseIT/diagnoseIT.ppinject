@@ -1,4 +1,4 @@
-package de.uni_stuttgart.iste.ppi;
+package com.github.diagnoseit.ppinject;
 
 /**
  * Holds the execution state of a specific performance problem within a particular scope instance. Usually, performance

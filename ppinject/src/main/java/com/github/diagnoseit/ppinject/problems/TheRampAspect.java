@@ -1,4 +1,4 @@
-package de.uni_stuttgart.iste.ppi.problems;
+package com.github.diagnoseit.ppinject.problems;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -6,10 +6,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.DeclarePrecedence;
 
-import de.uni_stuttgart.iste.ppi.Container;
-import de.uni_stuttgart.iste.ppi.ExecutionState;
-import de.uni_stuttgart.iste.ppi.ProblemConfiguration;
-import de.uni_stuttgart.iste.ppi.Scope;
+import com.github.diagnoseit.ppinject.Container;
+import com.github.diagnoseit.ppinject.ExecutionState;
+import com.github.diagnoseit.ppinject.ProblemConfiguration;
+import com.github.diagnoseit.ppinject.Scope;
 
 /**
  * This aspect implements the antipattern called The Ramp, introduced by Smith and Williams [2002], by replicating its
