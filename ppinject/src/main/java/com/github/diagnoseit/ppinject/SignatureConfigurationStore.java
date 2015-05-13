@@ -138,8 +138,10 @@ public final class SignatureConfigurationStore<C extends ProblemConfiguration> {
      * @throws InvalidPatternException
      */
     public void addPattern(String pattern, C configuration) throws InvalidPatternException {
+    	this.invalidateCache();
         patternList.add(new SignaturePatternEntry<C>(pattern, configuration));
     }
+    
 
     /**
      * This method tests if the given signature matches a pattern and returns the corresponding configuration.
@@ -147,23 +149,40 @@ public final class SignatureConfigurationStore<C extends ProblemConfiguration> {
      * @param signature The signature to match.
      * @return The configuration or null, if no match.
      */
+//    private C matchesPattern(final String signature) {
+//        synchronized (this) {
+//            final ListIterator<SignaturePatternEntry<C>> patternListIterator = this.patternList.listIterator(0);
+//            C lastMatchingConfig;
+//            while (patternListIterator.hasNext()) {
+//                final SignaturePatternEntry<C> patternEntry = patternListIterator.next();
+//                if (patternEntry.getPattern().matcher(signature).matches()) {
+//                    final C configuration = patternEntry.getConfiguration();
+//                    this.signatureConfigurationCache.put(signature, configuration);
+//                    return configuration;
+//                }
+//            }
+//        }
+//
+//        // Not found, so null (inactive).
+//        this.signatureConfigurationCache.put(signature, null);
+//
+//        return null; // if nothing matches, the default is null!
+//    }
+    
     private C matchesPattern(final String signature) {
-        synchronized (this) {
-            final ListIterator<SignaturePatternEntry<C>> patternListIterator = this.patternList.listIterator(this.patternList.size());
-            while (patternListIterator.hasPrevious()) {
-                final SignaturePatternEntry<C> patternEntry = patternListIterator.previous();
-                if (patternEntry.getPattern().matcher(signature).matches()) {
-                    final C configuration = patternEntry.getConfiguration();
-                    this.signatureConfigurationCache.put(signature, configuration);
-                    return configuration;
-                }
-            }
-        }
-
-        // Not found, so null (inactive).
-        this.signatureConfigurationCache.put(signature, null);
-
-        return null; // if nothing matches, the default is null!
+    	synchronized (this) {
+    		final ListIterator<SignaturePatternEntry<C>> patternListIterator = this.patternList.listIterator(0);
+    		C lastMatchingConfig = null;
+    		while(patternListIterator.hasNext()) {
+    			final SignaturePatternEntry<C> patternEntry = patternListIterator.next();
+    			if(patternEntry.getPattern().matcher(signature).matches()) {
+    				lastMatchingConfig = patternEntry.getConfiguration();
+    			}
+    		}
+			this.signatureConfigurationCache.put(signature, lastMatchingConfig);
+			return lastMatchingConfig;
+    	}
+    	
     }
 
     /**
@@ -174,11 +193,18 @@ public final class SignatureConfigurationStore<C extends ProblemConfiguration> {
      */
     public C getConfiguration(Signature signature) {
         String strSignature = signatureToLongString(signature);
-        if (signatureConfigurationCache.containsKey(strSignature)) {
-            return signatureConfigurationCache.get(strSignature); // May be null, but that's fine.
+        return this.getConfiguration(strSignature);
+    }
+    
+    public C getConfiguration(String  signature) {
+        if (signatureConfigurationCache.containsKey(signature)) {
+            return signatureConfigurationCache.get(signature); // May be null, but that's fine.
         } else {
-            return matchesPattern(strSignature);
+            return matchesPattern(signature);
         }
     }
-
+    
+    private void invalidateCache() {
+    	this.signatureConfigurationCache.clear();
+    }
 }

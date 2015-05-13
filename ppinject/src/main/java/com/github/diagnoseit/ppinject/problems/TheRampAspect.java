@@ -91,6 +91,14 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
             this.offsetMillis = offsetMillis;
             this.alpha = alpha;
         }
+        
+        public long getOffsetMillis() {
+        	return this.offsetMillis;
+        }
+        
+        public double getAlpha() {
+        	return this.alpha;
+        }
     }
 
     /**

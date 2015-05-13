@@ -11,11 +11,11 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
+import kieker.monitoring.core.signaturePattern.InvalidPatternException;
+
 import com.github.diagnoseit.ppinject.Container.BasePerformanceProblem;
 import com.github.diagnoseit.ppinject.problems.OneLaneBridgeAspect;
 import com.github.diagnoseit.ppinject.problems.TheRampAspect;
-
-import kieker.monitoring.core.signaturePattern.InvalidPatternException;
 
 /**
  * The performance problem injection service manages all performance problems
@@ -80,6 +80,7 @@ public class InjectionService {
 		}
 	}
 
+	
 	/**
 	 * Adds a new configuration entry. By keeping the reference to the
 	 * <tt>config</tt>, the caller can later on (de)activate and re-configure
@@ -118,11 +119,11 @@ public class InjectionService {
 	private void addTestData() throws InvalidPatternException {
 		// TODO This would normally be read from a file or a JMX interface
 		System.out.println("Initializing Test data");
-		
-		configure("*", TheRampAspect.class, new TheRampAspect.Config(
-				Scope.Global, 1000, 0.01));
-		configure("*", OneLaneBridgeAspect.class,
-				new OneLaneBridgeAspect.Config(Scope.Global, 2));
+
+		 configure("*", TheRampAspect.class, new TheRampAspect.Config(
+		 Scope.Global, 1000, 0.01));
+		 configure("*", OneLaneBridgeAspect.class,
+		 new OneLaneBridgeAspect.Config(Scope.Global, 2));
 	}
 
 	/**
@@ -149,9 +150,37 @@ public class InjectionService {
 			if ((Class) problemType == (Class) Container.BasePerformanceProblem.class) {
 				return null;
 			}
+
 			result = (SignatureConfigurationStore<C>) configuration
 					.get(problemType);
 		}
 		return result;
+	}
+	
+
+	public <C extends ProblemConfiguration, P extends Container.BasePerformanceProblem<C, ?>> void deconfigure(
+			String signaturePattern, Class<P> problemType)
+			throws InvalidPatternException {
+		@SuppressWarnings("unchecked")
+		SignatureConfigurationStore<C> configurationStore = (SignatureConfigurationStore<C>) configuration
+				.get(problemType);
+		
+		if (configurationStore == null) {
+			configurationStore = new SignatureConfigurationStore<C>();
+			configuration.put(problemType, configurationStore);
+		}
+		@SuppressWarnings("unchecked")
+		C config = (C) new ProblemConfiguration(Scope.Global);
+		config.setActivationStatus(false);
+		
+		configurationStore.addPattern(signaturePattern, config);
+	}
+	
+	public <C extends ProblemConfiguration, P extends Container.BasePerformanceProblem<C, ?>> void clearForProblemType(Class<P> problemType) {
+		configuration.put(problemType, new SignatureConfigurationStore<C>());
+	}
+	
+	public void clearAll() {
+		configuration.clear();
 	}
 }

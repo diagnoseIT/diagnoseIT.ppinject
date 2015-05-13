@@ -55,6 +55,10 @@ public abstract class OneLaneBridgeAspect extends Container.BasePerformanceProbl
             super(executionScope);
             this.numberOfLanes = numberOfLanes;
         }
+        
+        public int getNumberOfLanes() {
+        	return this.numberOfLanes;
+        }
     }
 
     /**

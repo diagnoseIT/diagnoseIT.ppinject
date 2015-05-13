@@ -76,18 +76,18 @@ public class Container {
 		 * store is shared between all instances by retrieving it from the
 		 * {@link InjectionService}.
 		 */
-		@SuppressWarnings("unchecked")
-		private final SignatureConfigurationStore<C> configurationStore = InjectionService
-				.getInstance()
-				.getConfiguration(
-						(Class<? extends BasePerformanceProblem<C, S>>) getClass());
+//		@SuppressWarnings("unchecked")
+//		private final SignatureConfigurationStore<C> configurationStore = InjectionService
+//				.getInstance()
+//				.getConfiguration(
+//						(Class<? extends BasePerformanceProblem<C, S>>) getClass());
 
 		/**
 		 * Direct reference to the respective execution state store from
 		 * {@link #STATE_STORE_BY_TYPE} (for quicker access).
 		 */
-		@SuppressWarnings("unchecked")
-		private final ExecutionStateStore<S> stateStore = getExecutionStateStore((Class<? extends BasePerformanceProblem<C, S>>) getClass());
+		//@SuppressWarnings("unchecked")
+		//private final ExecutionStateStore<S> stateStore = getExecutionStateStore((Class<? extends BasePerformanceProblem<C, S>>) getClass());
 
 		/**
 		 * This is the target operation. Note that this is a {@link Pointcut}!
@@ -114,7 +114,17 @@ public class Container {
 		@Around("targetOperation()")
 		public Object operation(final ProceedingJoinPoint joinPoint)
 				throws Throwable { // NOCS (Throwable)
-
+			
+			@SuppressWarnings("unchecked")
+			SignatureConfigurationStore<C> configurationStore = InjectionService.getInstance().getConfiguration((Class<? extends BasePerformanceProblem<C, S>>) getClass());
+			@SuppressWarnings("unchecked")
+			ExecutionStateStore<S> stateStore = getExecutionStateStore((Class<? extends BasePerformanceProblem<C, S>>) getClass());
+			
+			if(configurationStore == null) {
+				//System.out.println("No configuration for " + joinPoint.getKind() + " joinPoint " + joinPoint.getSignature());
+				return joinPoint.proceed();
+			}
+			
 			C joinPointConfig = configurationStore.getConfiguration(joinPoint
 					.getSignature());
 			if (joinPointConfig == null || !joinPointConfig.isActivated()) {
@@ -124,7 +134,7 @@ public class Container {
 				return joinPoint.proceed();
 			}
 			System.out.println("We're in " + joinPoint.getSignature());
-
+			
 			S state = stateStore.getState(joinPoint, joinPointConfig, this);
 			return execute(joinPoint, joinPointConfig, state);
 		}

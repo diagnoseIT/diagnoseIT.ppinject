@@ -36,5 +36,13 @@ public class ProblemConfiguration {
     public boolean isActivated() {
         return activated;
     }
+    
+    /**
+     * Sets the activated flag to the given parameter.
+     * @param status new state of activated flag
+     */
+    public void setActivationStatus(boolean status) {
+    	this.activated = status;
+    }
 
 }
