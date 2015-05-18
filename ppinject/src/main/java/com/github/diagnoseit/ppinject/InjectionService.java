@@ -14,8 +14,6 @@ import javax.management.ObjectName;
 import kieker.monitoring.core.signaturePattern.InvalidPatternException;
 
 import com.github.diagnoseit.ppinject.Container.BasePerformanceProblem;
-import com.github.diagnoseit.ppinject.problems.OneLaneBridgeAspect;
-import com.github.diagnoseit.ppinject.problems.TheRampAspect;
 
 /**
  * The performance problem injection service manages all performance problems
@@ -118,12 +116,11 @@ public class InjectionService {
 	 */
 	private void addTestData() throws InvalidPatternException {
 		// TODO This would normally be read from a file or a JMX interface
-		System.out.println("Initializing Test data");
-
-		 configure("*", TheRampAspect.class, new TheRampAspect.Config(
-		 Scope.Global, 1000, 0.01));
-		 configure("*", OneLaneBridgeAspect.class,
-		 new OneLaneBridgeAspect.Config(Scope.Global, 2));
+//		System.out.println("Initializing Test data");
+//		 configure("*", TheRampAspect.class, new TheRampAspect.Config(
+//		 Scope.Global, 1000, 0.25));
+//		 configure("*", OneLaneBridgeAspect.class,
+//		 new OneLaneBridgeAspect.Config(Scope.Global, 2));
 	}
 
 	/**
@@ -177,7 +174,7 @@ public class InjectionService {
 	}
 	
 	public <C extends ProblemConfiguration, P extends Container.BasePerformanceProblem<C, ?>> void clearForProblemType(Class<P> problemType) {
-		configuration.put(problemType, new SignatureConfigurationStore<C>());
+		configuration.remove(problemType);
 	}
 	
 	public void clearAll() {

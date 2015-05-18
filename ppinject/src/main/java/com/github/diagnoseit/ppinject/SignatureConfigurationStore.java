@@ -182,7 +182,6 @@ public final class SignatureConfigurationStore<C extends ProblemConfiguration> {
 			this.signatureConfigurationCache.put(signature, lastMatchingConfig);
 			return lastMatchingConfig;
     	}
-    	
     }
 
     /**

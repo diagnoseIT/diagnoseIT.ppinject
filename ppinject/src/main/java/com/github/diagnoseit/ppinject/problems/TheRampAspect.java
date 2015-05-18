@@ -52,6 +52,7 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
 
         // Sleep for the Ramp
         long sleepTimeNanos = configuration.offsetMillis*1000000 + (long) (duration * executionNumber * configuration.alpha);
+        System.out.println(configuration.offsetMillis*1000000 + " + " + (long) (duration * executionNumber * configuration.alpha) + " (" + duration + " * " + executionNumber + " * " + configuration.alpha + ")");
         
         System.out.println("Sleeping " + sleepTimeNanos + " nanos (= "+ sleepTimeNanos/1000000 +" millis)" );
         try {
