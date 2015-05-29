@@ -1,5 +1,6 @@
 package com.github.diagnoseit.ppinject;
 
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -25,6 +26,8 @@ public final class ExecutionStateStore<S extends ExecutionState> {
     private ThreadLocal<S> threadState = new ThreadLocal<S>();
     private ConcurrentMap<ProblemConfiguration, S> perConfigurationState = new ConcurrentHashMap<ProblemConfiguration, S>();
 
+    
+    
     /**
      * Retrieves the state for a specific scope. The scope is specified in <tt>configuration.</tt>
      * {@link C#getExecutionScope()}.
@@ -44,6 +47,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
         case Global:
             if (globalState == null) {
                 globalState = problem.produceInitialState(configuration);
+                //addStateToMap(configuration.getId(), globalState.getId());
             }
             return globalState;
 
@@ -57,6 +61,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             if (state1 == null) {
                 state1 = problem.produceInitialState(configuration);
                 perClassState.putIfAbsent(class1, state1);
+                //addStateToMap(configuration.getId(), state1.getId());
             }
             return perClassState.get(class1);
 
@@ -70,6 +75,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             if (state2 == null) {
                 state2 = problem.produceInitialState(configuration);
                 perInstanceState.putIfAbsent(instance2, state2);
+                //addStateToMap(configuration.getId(), state2.getId());
             }
             return perInstanceState.get(instance2);
 
@@ -79,6 +85,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             if (state3 == null) {
                 state3 = problem.produceInitialState(configuration);
                 perMethodState.putIfAbsent(sig3, state3);
+                ConfStateManager.addMapping(configuration, state3);
             }
             return perMethodState.get(sig3);
 
@@ -99,6 +106,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             if (state4 == null) {
                 state4 = problem.produceInitialState(configuration);
                 instanceMethods4.putIfAbsent(sig4, state4);
+                //addStateToMap(configuration.getId(), state4.getId());
             }
             return instanceMethods4.get(sig4);
 
@@ -108,6 +116,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
                 if (state5 == null) {
                     state5 = problem.produceInitialState(configuration);
                     threadState.set(state5);
+                    //addStateToMap(configuration.getId(), state5.getId());
                 }
                 return state5;
             }
@@ -117,6 +126,7 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             if (state5 == null) {
                 state5 = problem.produceInitialState(configuration);
                 perConfigurationState.putIfAbsent(configuration, state5);
+                //addStateToMap(configuration.getId(), state5.getId());
             }
             return perConfigurationState.get(configuration);
 
@@ -124,5 +134,58 @@ public final class ExecutionStateStore<S extends ExecutionState> {
             throw new RuntimeException("Unsupported scope " + configuration.getExecutionScope());
         }
     }
-
+    
+    public <S extends ExecutionState> void deleteState(Scope scope, long stateId) {
+    	switch(scope) {
+    	case PerMethod:
+    		Iterator<S> iterator = (Iterator<S>) perMethodState.values().iterator();
+    		while(iterator.hasNext()) {
+    			S state = iterator.next();
+    			if(state.getId() == stateId) {
+    				iterator.remove();
+    				System.out.println("Removed state " + stateId);
+    				break;
+    			}
+    		}
+    		
+    		return;
+    	}
+    }
+    
+    public <C extends ProblemConfiguration> void setStateForConfig(Scope scope, C config, S state) {
+    	switch(scope) {
+    	case PerMethod:
+    		Iterator<String> iterator = perMethodState.keySet().iterator();
+    		while(iterator.hasNext()) {
+    			String key = iterator.next();
+    			if(key == config.) {
+    				
+    			}
+    		}
+    		
+    		return;
+    	}
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -59,6 +59,11 @@ public abstract class OneLaneBridgeAspect extends Container.BasePerformanceProbl
         public int getNumberOfLanes() {
         	return this.numberOfLanes;
         }
+        
+        @Override
+        public String toString() {
+        	return super.toString() + ", " + this.numberOfLanes;
+        }
     }
 
     /**
@@ -72,6 +77,11 @@ public abstract class OneLaneBridgeAspect extends Container.BasePerformanceProbl
          */
         public State(int numberOfLanes) {
             semaphore = new Semaphore(numberOfLanes, true);
+        }
+        
+        @Override
+        public String toString() {
+        	return super.toString() + ", " + this.semaphore;
         }
     }
 

@@ -1,8 +1,5 @@
 package com.github.diagnoseit.ppinject;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -41,36 +38,6 @@ public class Container {
 	 */
 	@Aspect
 	public static abstract class BasePerformanceProblem<C extends ProblemConfiguration, S extends ExecutionState> {
-
-		/**
-		 * Used to store the execution states. Aspect classes may be
-		 * instantiated multiple times, so that a static store needs to be used.
-		 */
-		private static final ConcurrentMap<Class<? extends BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>> STATE_STORE_BY_TYPE = 
-				     new ConcurrentHashMap<Class<? extends BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>>();
-
-		/**
-		 * Accessor method for the state store cache.
-		 * 
-		 * @param problemType
-		 *            The type of the performance problem (represented by the
-		 *            {@link Class} instance).
-		 * @return The {@link ExecutionStateStore} for the problem type, which
-		 *         in turn contains the scoped state information.
-		 */
-		@SuppressWarnings("unchecked")
-		private static <S extends ExecutionState> ExecutionStateStore<S> getExecutionStateStore(
-				Class<? extends BasePerformanceProblem<?, S>> problemType) {
-			ExecutionStateStore<S> store = (ExecutionStateStore<S>) STATE_STORE_BY_TYPE
-					.get(problemType);
-			if (store == null) {
-				store = new ExecutionStateStore<S>();
-				STATE_STORE_BY_TYPE.putIfAbsent(problemType, store);
-			}
-			return (ExecutionStateStore<S>) STATE_STORE_BY_TYPE
-					.get(problemType);
-		}
-
 
 		/**
 		 * The configuration store for this problem type. Note that Aspect
@@ -126,7 +93,7 @@ public class Container {
 					.getConfiguration(
 							(Class<? extends BasePerformanceProblem<C, S>>) getClass());
 			@SuppressWarnings("unchecked")
-			ExecutionStateStore<S> stateStore = getExecutionStateStore((Class<? extends BasePerformanceProblem<C, S>>) getClass());
+			ExecutionStateStore<S> stateStore = InjectionService.getExecutionStateStore((Class<? extends BasePerformanceProblem<C, S>>) getClass());
 
 			if (configurationStore == null) {
 				return joinPoint.proceed();

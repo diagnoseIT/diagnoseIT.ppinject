@@ -100,6 +100,11 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
         public double getAlpha() {
         	return this.alpha;
         }
+        
+        @Override
+        public String toString() {
+        	return super.toString() + ", " + this.offsetMillis + ", " + this.alpha;
+        }
     }
 
     /**
@@ -107,6 +112,11 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
      */
     public static class State extends ExecutionState {
         private final AtomicInteger executionNumber = new AtomicInteger(0);
+        
+        @Override
+        public String toString() {
+        	return super.toString() + ", " + this.executionNumber;
+        }
     }
 
 }

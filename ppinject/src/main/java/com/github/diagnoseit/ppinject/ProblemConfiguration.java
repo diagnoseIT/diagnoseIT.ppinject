@@ -1,5 +1,7 @@
 package com.github.diagnoseit.ppinject;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * Holds the configuration of a specific performance problem instance. Usually, performance problem implementations will
  * extend this class to store more information, but it may also be used "as is" to merely indicate that the performance
@@ -9,9 +11,12 @@ package com.github.diagnoseit.ppinject;
  */
 public class ProblemConfiguration {
 
+	private static AtomicLong idCounter = new AtomicLong(0);
+	
     private final Scope executionScope;
+    private final long id; 
     private boolean activated = true;
-
+    
     /**
      * Creates a new instance.
      * 
@@ -21,6 +26,7 @@ public class ProblemConfiguration {
     public ProblemConfiguration(Scope executionScope) {
         super();
         this.executionScope = executionScope;
+        this.id = idCounter.getAndIncrement();
     }
 
     /**
@@ -44,5 +50,13 @@ public class ProblemConfiguration {
     public void setActivationStatus(boolean status) {
     	this.activated = status;
     }
-
+    
+    public long getId() {
+    	return this.id;
+    }
+    
+    @Override
+    public String toString() {
+    	return this.id + ", " + this.executionScope.name() + ", " + this.activated;
+    }
 }

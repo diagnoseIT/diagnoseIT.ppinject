@@ -1,8 +1,10 @@
 package com.github.diagnoseit.ppinject;
 
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanRegistrationException;
@@ -45,6 +47,34 @@ public class InjectionService {
 	private final Map<Class<? extends Container.BasePerformanceProblem<?, ?>>, SignatureConfigurationStore<?>> configuration = new ConcurrentHashMap<Class<? extends Container.BasePerformanceProblem<?, ?>>, SignatureConfigurationStore<?>>();
 
 	/**
+	 * Used to store the execution states. Aspect classes may be instantiated
+	 * multiple times, so that a static store needs to be used.
+	 */
+	private static final ConcurrentMap<Class<? extends Container.BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>> STATE_STORE_BY_TYPE = new ConcurrentHashMap<Class<? extends Container.BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>>();
+
+	
+	/**
+	 * Accessor method for the state store cache.
+	 * 
+	 * @param problemType
+	 *            The type of the performance problem (represented by the
+	 *            {@link Class} instance).
+	 * @return The {@link ExecutionStateStore} for the problem type, which in
+	 *         turn contains the scoped state information.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <S extends ExecutionState> ExecutionStateStore<S> getExecutionStateStore(
+			Class<? extends BasePerformanceProblem<?, S>> problemType) {
+		ExecutionStateStore<S> store = (ExecutionStateStore<S>) STATE_STORE_BY_TYPE
+				.get(problemType);
+		if (store == null) {
+			store = new ExecutionStateStore<S>();
+			STATE_STORE_BY_TYPE.putIfAbsent(problemType, store);
+		}
+		return (ExecutionStateStore<S>) STATE_STORE_BY_TYPE.get(problemType);
+	}
+
+	/**
 	 * Singleton pattern private constructor.
 	 */
 	private InjectionService() {
@@ -71,14 +101,13 @@ public class InjectionService {
 			e.printStackTrace();
 		}
 
-		try {
-			addTestData();
-		} catch (InvalidPatternException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			addTestData();
+//		} catch (InvalidPatternException e) {
+//			e.printStackTrace();
+//		}
 	}
 
-	
 	/**
 	 * Adds a new configuration entry. By keeping the reference to the
 	 * <tt>config</tt>, the caller can later on (de)activate and re-configure
@@ -114,14 +143,14 @@ public class InjectionService {
 	 * @throws InvalidPatternException
 	 *             If a pattern is syntactically wrong.
 	 */
-	private void addTestData() throws InvalidPatternException {
-		// TODO This would normally be read from a file or a JMX interface
-//		System.out.println("Initializing Test data");
-//		 configure("*", TheRampAspect.class, new TheRampAspect.Config(
-//		 Scope.Global, 1000, 0.25));
-//		 configure("*", OneLaneBridgeAspect.class,
-//		 new OneLaneBridgeAspect.Config(Scope.Global, 2));
-	}
+//	private void addTestData() throws InvalidPatternException {
+//		// TODO This would normally be read from a file or a JMX interface
+//		// System.out.println("Initializing Test data");
+//		// configure("*", TheRampAspect.class, new TheRampAspect.Config(
+//		// Scope.Global, 1000, 0.25));
+//		// configure("*", OneLaneBridgeAspect.class,
+//		// new OneLaneBridgeAspect.Config(Scope.Global, 2));
+//	}
 
 	/**
 	 * Retrieves the configuration store for a performance problem type.
@@ -153,7 +182,6 @@ public class InjectionService {
 		}
 		return result;
 	}
-	
 
 	public <C extends ProblemConfiguration, P extends Container.BasePerformanceProblem<C, ?>> void deconfigure(
 			String signaturePattern, Class<P> problemType)
@@ -161,22 +189,25 @@ public class InjectionService {
 		@SuppressWarnings("unchecked")
 		SignatureConfigurationStore<C> configurationStore = (SignatureConfigurationStore<C>) configuration
 				.get(problemType);
-		
+
 		if (configurationStore == null) {
 			configurationStore = new SignatureConfigurationStore<C>();
 			configuration.put(problemType, configurationStore);
 		}
+		
+		//TODO: For now we assume PerMethod scope only
 		@SuppressWarnings("unchecked")
-		C config = (C) new ProblemConfiguration(Scope.Global);
+		C config = (C) new ProblemConfiguration(Scope.PerMethod);
 		config.setActivationStatus(false);
 		
 		configurationStore.addPattern(signaturePattern, config);
 	}
-	
-	public <C extends ProblemConfiguration, P extends Container.BasePerformanceProblem<C, ?>> void clearForProblemType(Class<P> problemType) {
+
+	public <C extends ProblemConfiguration, P extends Container.BasePerformanceProblem<C, ?>> void clearForProblemType(
+			Class<P> problemType) {
 		configuration.remove(problemType);
 	}
-	
+
 	public void clearAll() {
 		configuration.clear();
 	}
