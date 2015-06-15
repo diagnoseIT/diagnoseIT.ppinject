@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ExecutionState {
 	private static AtomicLong idCounter = new AtomicLong(0);
     private final long id = idCounter.getAndIncrement();
+    private boolean active = true;
 
     public long getId() {
     	return this.id;
@@ -19,6 +20,14 @@ public class ExecutionState {
     
     @Override
     public String toString() {
-    	return "" + this.id;
+    	return this.id + ", " + this.active;
+    }
+    
+    public boolean isActive() {
+    	return this.active;
+    }
+    
+    public void deactivate() {
+    	this.active = false;
     }
 }

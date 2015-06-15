@@ -1,5 +1,7 @@
 package com.github.diagnoseit.ppinject;
 
+import java.util.List;
+
 
 
 public interface PpiMBean {
@@ -15,5 +17,9 @@ public interface PpiMBean {
 	public void clearAll();
 	public String getConfigForId(long id);
 	public String getStateForId(long id);
-	public String showAll();
+	public void removeTheRampAspectById(long id);
+	public void removeOneLaneBridgeById(long id);
+	public List<String> getConfMap();
+	public List<String> getStateMap();
+	public List<String> getConfStateMap();
 }

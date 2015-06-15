@@ -1,6 +1,5 @@
 package com.github.diagnoseit.ppinject;
 
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -25,8 +24,6 @@ public final class ExecutionStateStore<S extends ExecutionState> {
     private ConcurrentMap<Object, ConcurrentMap<String, S>> localState = new ConcurrentHashMap<Object, ConcurrentMap<String, S>>();
     private ThreadLocal<S> threadState = new ThreadLocal<S>();
     private ConcurrentMap<ProblemConfiguration, S> perConfigurationState = new ConcurrentHashMap<ProblemConfiguration, S>();
-
-    
     
     /**
      * Retrieves the state for a specific scope. The scope is specified in <tt>configuration.</tt>
@@ -82,11 +79,14 @@ public final class ExecutionStateStore<S extends ExecutionState> {
         case PerMethod:
             String sig3 = joinPoint.getSignature().toLongString();
             S state3 = perMethodState.get(sig3);
-            if (state3 == null) {
+            
+            if (state3 == null || !state3.isActive()) {
+            	System.out.println("Creating new state!");
                 state3 = problem.produceInitialState(configuration);
-                perMethodState.putIfAbsent(sig3, state3);
+                perMethodState.put(sig3, state3);
                 ConfStateManager.addMapping(configuration, state3);
             }
+            System.out.println("# sig: " + sig3 + "; state: " + perMethodState.get(sig3) + " #");
             return perMethodState.get(sig3);
 
         case Local:
@@ -135,36 +135,25 @@ public final class ExecutionStateStore<S extends ExecutionState> {
         }
     }
     
-    public <S extends ExecutionState> void deleteState(Scope scope, long stateId) {
+    public void deleteState(Scope scope, long stateId) {
     	switch(scope) {
     	case PerMethod:
-    		Iterator<S> iterator = (Iterator<S>) perMethodState.values().iterator();
-    		while(iterator.hasNext()) {
-    			S state = iterator.next();
-    			if(state.getId() == stateId) {
-    				iterator.remove();
-    				System.out.println("Removed state " + stateId);
-    				break;
-    			}
+    		ExecutionState es = ConfStateManager.getStateById(stateId);
+    		if (null != es) {
+    			//perMethodState.keySet().remove(es);
+    			es.deactivate();
     		}
-    		
-    		return;
     	}
+    	return;
     }
     
-    public <C extends ProblemConfiguration> void setStateForConfig(Scope scope, C config, S state) {
-    	switch(scope) {
+    public <C extends ProblemConfiguration> void setStateForConfig(C config, S state) {
+    	switch(config.getExecutionScope()) {
     	case PerMethod:
-    		Iterator<String> iterator = perMethodState.keySet().iterator();
-    		while(iterator.hasNext()) {
-    			String key = iterator.next();
-    			if(key == config.) {
-    				
-    			}
-    		}
-    		
-    		return;
+    		deleteState(config.getExecutionScope(), state.getId());
+    		ConfStateManager.addMapping(config, state);
     	}
+    	return;
     }
 }
 

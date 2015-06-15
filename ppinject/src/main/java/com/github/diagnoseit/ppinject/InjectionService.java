@@ -1,7 +1,6 @@
 package com.github.diagnoseit.ppinject;
 
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -52,7 +51,6 @@ public class InjectionService {
 	 */
 	private static final ConcurrentMap<Class<? extends Container.BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>> STATE_STORE_BY_TYPE = new ConcurrentHashMap<Class<? extends Container.BasePerformanceProblem<?, ?>>, ExecutionStateStore<?>>();
 
-	
 	/**
 	 * Accessor method for the state store cache.
 	 * 

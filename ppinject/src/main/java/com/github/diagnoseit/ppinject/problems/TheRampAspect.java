@@ -67,7 +67,6 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
         } else {
             throw exception;
         }
-
     }
 
     @Override
@@ -118,5 +117,4 @@ public abstract class TheRampAspect extends Container.BasePerformanceProblem<The
         	return super.toString() + ", " + this.executionNumber;
         }
     }
-
 }

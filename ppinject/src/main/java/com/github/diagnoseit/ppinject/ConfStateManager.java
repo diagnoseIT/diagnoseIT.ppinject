@@ -8,14 +8,24 @@ import java.util.concurrent.ConcurrentMap;
 
 public class ConfStateManager {
 	
-	private static ConcurrentMap<Long,Long> configToStateMap = new ConcurrentHashMap<Long,Long>();
+	private static ConcurrentMap<Long, Long> configToStateMap = new ConcurrentHashMap<Long,Long>();
 	private static ConcurrentMap<Long, ProblemConfiguration> configMap = new ConcurrentHashMap<Long, ProblemConfiguration>();
 	private static ConcurrentMap<Long, ExecutionState> stateMap = new ConcurrentHashMap<Long, ExecutionState>();
 	
-    public static <C extends ProblemConfiguration, S extends ExecutionState> void addMapping(C config, final S state) {
+    public static void addMapping(ProblemConfiguration config, final ExecutionState state) {
     	addConfigToStateMapping(config.getId(), state.getId());
     	addConfigMapping(config);
     	addStateMapping(state);
+    }
+    
+    public static void deleteConfig(final long id) {
+    	configToStateMap.remove(id);
+    	configMap.remove(id);
+    }
+    
+    public static void deleteState(final long id) {
+    	configToStateMap.keySet().remove(id);
+    	stateMap.remove(id);
     }
     
     public static ProblemConfiguration getConfigById(final long id) {
@@ -26,15 +36,15 @@ public class ConfStateManager {
     	return stateMap.get(id);
     }
     
-    private static <C extends ProblemConfiguration> void addConfigMapping(final C config) {
+    private static void addConfigMapping(final ProblemConfiguration config) {
     	configMap.put(config.getId(), config);
     }
     
-    private static <S extends ExecutionState> void addStateMapping(final S state) {
+    private static void addStateMapping(final ExecutionState state) {
     	stateMap.put(state.getId(), state);
     }
     
-    public static Long getStateByConfigId(final long configId) {
+    public static Long getStateIdByConfigId(final long configId) {
     	return configToStateMap.get(configId);
     }
     
@@ -62,4 +72,34 @@ public class ConfStateManager {
     public static Map<Long,Long> getConfigToStateMap() {
     	return configToStateMap;
     }
+    
+	public static List<String> getConfMap() {
+		List<String> confList = new ArrayList<String>();
+    	for(long i : configMap.keySet()) {
+    		confList.add(configMap.get(i) + "");
+    	}
+		return confList;
+	}
+
+	public static List<String> getStateMap() {
+		List<String> stateList = new ArrayList<String>();
+    	for(long j : stateMap.keySet()) {
+    		stateList.add(stateMap.get(j) + "");
+    	}
+		return stateList;
+	}
+
+	public static List<String> getConfStateMap() {
+		List<String> confStateList = new ArrayList<String>();
+    	for(long k: configToStateMap.keySet()) {
+    		confStateList.add(k + " -> " + configToStateMap.get(k));
+    	}
+    	return confStateList;
+	}
+
+	public static void deleteMapping(long id, long stateId) {
+		if(configToStateMap.get(id) == stateId) {
+			configToStateMap.remove(id);
+		}
+	}
 }
