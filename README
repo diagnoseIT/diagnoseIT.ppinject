@@ -1,10 +1,16 @@
-This directory contains the files for the seminar paper of Philipp Keck in the 
-seminar "Software Evolution", titled "Classification and Injection of Typical 
-Performance Problems in Enterprise Applications".
+This repository contains the implementation and evaluation setup of the performance problem 
+injector presented in the following publication: 
 
-The contents are based on the files corresponding to the example
+Philipp Keck, André van Hoorn, Dušan Okanović, Teerat Pitakrat, and Thomas F. Düllmann: 
+Antipattern-Based Problem Injection for Assessing Performance and Reliability Evaluation Techniques.
+In Proceedings of the 8th International Workshop on Software Aging and Rejuvenation (WoSAR 2016), 
+co-located with 27th International Symposium on Software Reliability Engineering (ISSRE 2016). 
+IEEE, October, 2016, Ottawa, Canada. 
+The publication is available via http://diagnoseit.github.io/publications.html
+
+The directory contents are based on the files corresponding to the example
 presented in Appendix B (Java EE Servlet Container Example) of 
-the Kieker user guide.
+the Kieker user guide (http://kieker-monitoring.net/documentation/).
 See the user guide (kieker-<version>_userguide.pdf) for details.
 
 The following changes have been made to the Kieker example:
